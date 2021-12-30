@@ -129,3 +129,21 @@ function UploadCourse(Id){
     });
    
 }
+
+function Editdata(qwe){
+    const db= firebase.firestore();
+    db.collection("students").doc(qwe).get()
+       .then(doc=>{
+                let dt= doc.data();
+                let ied=doc.id;
+                console.log(dt)    
+                document.getElementById('edit').innerHTML = `<input type="text" id="name1" value="${dt.name}" >
+                                                             <label for="name1">Name</label>
+                                                             <br>
+                                                             <input type="text" id="grade1" value="${dt.grade}">
+                                                             <label for="grade1">Grade</label>
+                                                             <button onclick="Edata('${ied}')">
+                                                             Enter
+                                                             </button> `;
+         })    
+}
