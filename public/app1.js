@@ -88,7 +88,7 @@ function Showcourses(Id){
                         let row =    `<tr>
                             <td>${dt.Courses[i]}</td> 
                             <td><button onclick="DeleteC('${Courseid}','${i}')">Delete</button>
-                            <td><button onclick="EditC('${Courseid}','${i}')">Edit</button>                           
+                            <td><button onclick="EditCourse('${Courseid}','${i}')">Edit</button>                           
                         </tr>`;
                         table1.innerHTML =table1.innerHTML+ row
             } 
@@ -130,20 +130,42 @@ function UploadCourse(Id){
    
 }
 
-function Editdata(qwe){
+function EditCourse(Id,x){
     const db= firebase.firestore();
-    db.collection("students").doc(qwe).get()
+    db.collection("students").doc(Id).get()
        .then(doc=>{
                 let dt= doc.data();
-                let ied=doc.id;
                 console.log(dt)    
-                document.getElementById('edit').innerHTML = `<input type="text" id="name1" value="${dt.name}" >
-                                                             <label for="name1">Name</label>
-                                                             <br>
-                                                             <input type="text" id="grade1" value="${dt.grade}">
-                                                             <label for="grade1">Grade</label>
-                                                             <button onclick="Edata('${ied}')">
+                document.getElementById('edit').innerHTML = `<input type="text" id="course1" value="${dt.Courses[x]}" >
+                                                             <label for="course1">Course</label>
+                                                             
+                                                             <button onclick="EditC('${Id}','${x}')">
                                                              Enter
                                                              </button> `;
          })    
+}
+
+ function EditC(Id,x){
+
+    const db = firebase.firestore();
+    db.collection('students').doc(Id).get()
+        .then(doc=>{
+            let dt=doc.data();
+            let cs = document.getElementById('course1').value;
+            db.collection('students').doc(Id).update({
+                Courses : firebase.firestore.FieldValue.arrayRemove(dt.Courses[x])
+            });
+            db.collection('students').doc(Id).update({
+                Courses: firebase.firestore.FieldValue.arrayUnion(cs)
+            });
+            
+        
+            
+        })
+
+        
+        
+
+    const y = document.getElementById('edit');
+    y.style.display = "none";
 }
