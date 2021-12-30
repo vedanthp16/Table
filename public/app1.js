@@ -31,7 +31,8 @@ function Uploadata(){
     const db = firebase.firestore();
     db.collection('students').add({
         name: document.getElementById('name').value,
-        grade: document.getElementById('grade').value
+        grade: document.getElementById('grade').value,
+        Courses : ['']
     });
    
 }
@@ -81,7 +82,7 @@ function Showcourses(Id){
         let dt = doc.data();
         console.log(dt.Courses)         
             
-            let Courseid = doc.id;
+            let Courseid = doc.id
             let len = dt['Courses'].length;
             console.log(len);
             for(let i=0;i<len;i++ ){
@@ -102,6 +103,7 @@ function Showcourses(Id){
                                 </div>
                                 <div id='editc'></div>`
            // document.getElementById('Coursemod').style.display="block";         
+            
         })
     
 
